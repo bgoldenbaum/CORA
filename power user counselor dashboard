@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | NCSC CORA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-blue': {
+                            600: '#083156',
+                            500: '#3F86C7', 
+                            400: '#DEEBFC'
+                        },
+                        'brand-green': {
+                            500: '#559D76'
+                        },
+                        'brand-gold': {
+                            500: '#D3A62A'
+                        },
+                        'brand-orange': {
+                            500: '#BE561F'
+                        }
+                    },
+                    fontFamily: {
+                        'serif': ['Spectral', 'Georgia', 'serif'],
+                        'sans': ['Public Sans', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@300;400;500;600;700&family=Public+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="min-h-screen font-sans overflow-x-hidden" style="background: linear-gradient(0deg, #f2eff8 35%, #deebfc 65%);">
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-sm border-b border-gray-200 w-full" role="navigation">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16 min-w-0">
+                <!-- Logo and Title -->
+                <div class="flex items-center min-w-0 flex-shrink-0">
+                    <div class="bg-brand-blue-600 text-white rounded-lg p-2 mr-2 sm:mr-3 flex-shrink-0" aria-hidden="true">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                            <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z"/>
+                        </svg>
+                    </div>
+                    <div class="min-w-0">
+                        <h1 class="text-lg sm:text-xl font-semibold text-gray-900 truncate">NCSC CORA</h1>
+                        <p class="text-xs sm:text-sm text-gray-500 truncate">Court Opportunities & Resources</p>
+                    </div>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="nav-link text-black font-bold border-b-2 border-brand-orange-500 pb-1">
+                        Dashboard
+                    </a>
+                    <a href="#" class="nav-link text-black hover:text-gray-700 pb-1" onclick="showApplicants()">
+                        Applicants
+                    </a>
+                    <a href="#" class="nav-link text-black hover:text-gray-700 pb-1">
+                        Applications
+                    </a>
+                    <a href="#" class="nav-link text-black hover:text-gray-700 pb-1">
+                        Reports
+                    </a>
+                    <a href="#" class="nav-link text-black hover:text-gray-700 pb-1">
+                        Resources
+                    </a>
+                    <a href="#" class="nav-link text-black hover:text-gray-700 pb-1">
+                        Users
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button type="button" class="text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700" onclick="toggleMobileMenu()">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- User Profile -->
+                <div class="flex items-center space-x-2 sm:space-x-4 min-w-0 flex-shrink-0">
+                    <div class="hidden sm:flex items-center space-x-2 flex-shrink-0">
+                        <div class="w-2 h-2 bg-purple-400 rounded-full"></div>
+                        <span class="text-sm text-gray-600">Counselor</span>
+                    </div>
+                    <div class="flex items-center space-x-2 min-w-0">
+                        <img class="h-8 w-8 rounded-full flex-shrink-0" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%237c3aed'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='32' font-family='Arial'%3EPJ%3C/text%3E%3C/svg%3E" alt="Counselor profile picture">
+                        <div class="text-sm hidden sm:block min-w-0">
+                            <p class="font-medium text-gray-900 truncate">Prof. Patricia Johnson</p>
+                            <p class="text-gray-500 truncate">Harvard Law School</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-200">
+            <div class="px-4 py-2 space-y-1">
+                <a href="#" class="block px-3 py-2 text-black font-bold bg-orange-50 border-l-4 border-brand-orange-500 rounded-md">Dashboard</a>
+                <a href="#" class="block px-3 py-2 text-black hover:text-gray-700 hover:bg-gray-50 rounded-md" onclick="showApplicants()">Applicants</a>
+                <a href="#" class="block px-3 py-2 text-black hover:text-gray-700 hover:bg-gray-50 rounded-md">Applications</a>
+                <a href="#" class="block px-3 py-2 text-black hover:text-gray-700 hover:bg-gray-50 rounded-md">Reports</a>
+                <a href="#" class="block px-3 py-2 text-black hover:text-gray-700 hover:bg-gray-50 rounded-md">Resources</a>
+                <a href="#" class="block px-3 py-2 text-black hover:text-gray-700 hover:bg-gray-50 rounded-md">Users</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8 w-full min-w-0" role="main">
+        <!-- Header Section -->
+        <div class="mb-6 sm:mb-8">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                <div class="mb-4 sm:mb-0">
+                    <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 font-serif">Career Services Dashboard</h2>
+                    <p class="text-gray-600 mt-1 text-sm sm:text-base">Harvard Law School • Overview & Analytics</p>
+                </div>
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-3 min-w-0">
+                    <button class="bg-brand-blue-600 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-brand-blue-500 focus:outline-none focus:ring-2 focus:ring-brand-blue-500 focus:ring-offset-2 transition-colors font-medium text-sm whitespace-nowrap" onclick="generateReport()">
+                        <svg class="w-4 h-4 mr-1 sm:mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a4 4 0 01-4-4V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        <span class="hidden xs:inline">Generate Report</span>
+                        <span class="xs:hidden">Report</span>
+                    </button>
+                    <button class="bg-white border border-gray-300 text-gray-700 px-3 sm:px-4 py-2 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-brand-blue-500 focus:ring-offset-2 transition-colors font-medium text-sm whitespace-nowrap" onclick="refreshData()">
+                        <svg class="w-4 h-4 mr-1 sm:mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                        </svg>
+                        <span class="hidden xs:inline">Refresh</span>
+                        <span class="xs:hidden">Sync</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Metrics Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
+            <!-- Active Applicants -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+                <div class="flex items-center">
+                    <div class="bg-blue-100 rounded-lg p-3 mr-4">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Active Applicants</p>
+                        <p class="text-2xl font-bold text-gray-900">247</p>
+                        <p class="text-xs text-green-600">Currently applying</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Open Applications -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+                <div class="flex items-center">
+                    <div class="bg-green-100 rounded-lg p-3 mr-4">
+                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Open Applications</p>
+                        <p class="text-2xl font-bold text-gray-900">89</p>
+                        <p class="text-xs text-green-600">Available for students</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pending Reviews -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+                <div class="flex items-center">
+                    <div class="bg-yellow-100 rounded-lg p-3 mr-4">
+                        <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Pending Reviews</p>
+                        <p class="text-2xl font-bold text-gray-900">43</p>
+                        <p class="text-xs text-yellow-600">Awaiting counselor review</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Placement Rate -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+                <div class="flex items-center">
+                    <div class="bg-purple-100 rounded-lg p-3 mr-4">
+                        <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Placement Rate</p>
+                        <p class="text-2xl font-bold text-gray-900">65%</p>
+                        <p class="text-xs text-purple-600">2024 cohort</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 min-w-0">
+            <!-- Active Applicants -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                <div class="p-4 sm:p-6 border-b border-brand-orange-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-900 font-sans">Active Applicants</h3>
+                            <p class="text-sm text-gray-500">Students currently applying</p>
+                        </div>
+                        <button class="text-brand-blue-600 hover:text-brand-blue-500 text-sm font-medium" onclick="viewActiveApplicants()">
+                            View All
+                        </button>
+                    </div>
+                </div>
+                <div class="p-4 sm:p-6">
+                    <div class="space-y-4">
+                        <!-- Applicant 1 -->
+                        <div class="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
+                            <div class="flex items-center space-x-3">
+                                <img class="h-8 w-8 rounded-full" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%234f46e5'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='32' font-family='Arial'%3EAR%3C/text%3E%3C/svg%3E" alt="Alex Rodriguez">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">Alex Rodriguez</p>
+                                    <p class="text-xs text-gray-500">3L • Federal Clerkship Track</p>
+                                </div>
+                            </div>
+                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                Active
+                            </span>
+                        </div>
+
+                        <!-- Applicant 2 -->
+                        <div class="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
+                            <div class="flex items-center space-x-3">
+                                <img class="h-8 w-8 rounded-full" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%2310b981'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='32' font-family='Arial'%3ESC%3C/text%3E%3C/svg%3E" alt="Sarah Chen">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">Sarah Chen</p>
+                                    <p class="text-xs text-gray-500">3L • State Supreme Court</p>
+                                </div>
+                            </div>
+                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                Interview
+                            </span>
+                        </div>
+
+                        <!-- Applicant 3 -->
+                        <div class="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
+                            <div class="flex items-center space-x-3">
+                                <img class="h-8 w-8 rounded-full" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23f59e0b'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='32' font-family='Arial'%3EMK%3C/text%3E%3C/svg%3E" alt="Michael Kim">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">Michael Kim</p>
+                                    <p class="text-xs text-gray-500">3L • DOJ Honors Program</p>
+                                </div>
+                            </div>
+                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                Submitted
+                            </span>
+                        </div>
+
+                        <!-- Applicant 4 -->
+                        <div class="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
+                            <div class="flex items-center space-x-3">
+                                <img class="h-8 w-8 rounded-full" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23ec4899'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='32' font-family='Arial'%3EED%3C/text%3E%3C/svg%3E" alt="Emma Davis">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">Emma Davis</p>
+                                    <p class="text-xs text-gray-500">2L • Public Interest</p>
+                                </div>
+                            </div>
+                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
+                                Review
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- All Students -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                <div class="p-4 sm:p-6 border-b border-brand-orange-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-900 font-sans">All Students</h3>
+                            <p class="text-sm text-gray-500">Students affiliated with school</p>
+                        </div>
+                        <button class="text-brand-blue-600 hover:text-brand-blue-500 text-sm font-medium" onclick="viewAllStudents()">
+                            View All
+                        </button>
+                    </div>
+                </div>
+                <div class="p-4 sm:p-6">
+                    <div class="space-y-4">
+                        <!-- Student 1 -->
+                        <div class="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
+                            <div class="flex items-center space-x-3">
+                                <img class="h-8 w-8 rounded-full" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%236366f1'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='32' font-family='Arial'%3EJL%3C/text%3E%3C/svg%3E" alt="James Liu">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">James Liu</p>
+                                    <p class="text-xs text-gray-500">3L • GPA: 3.8 • Law Review</p>
+                                </div>
+                            </div>
+                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                Active
+                            </span>
+                        </div>
+
+                        <!-- Student 2 -->
+                        <div class="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
+                            <div class="flex items-center space-x-3">
+                                <img class="h-8 w-8 rounded-full" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23dc2626'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='32' font-family='Arial'%3ERT%3C/text%3E%3C/svg%3E" alt="Rachel Thompson">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">Rachel Thompson</p>
+                                    <p class="text-xs text-gray-500">2L • GPA: 3.9 • Moot Court</p>
+                                </div>
+                            </div>
+                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                Inactive
+                            </span>
+                        </div>
+
+                        <!-- Student 3 -->
+                        <div class="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
+                            <div class="flex items-center space-x-3">
+                                <img class="h-8 w-8 rounded-full" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%2306b6d4'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='32' font-family='Arial'%3EDP%3C/text%3E%3C/svg%3E" alt="David Park">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">David Park</p>
+                                    <p class="text-xs text-gray-500">1L • GPA: 3.7 • Student Gov</p>
+                                </div>
+                            </div>
+                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                Inactive
+                            </span>
+                        </div>
+
+                        <!-- Student 4 -->
+                        <div class="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
+                            <div class="flex items-center space-x-3">
+                                <img class="h-8 w-8 rounded-full" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23059669'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='32' font-family='Arial'%3ELW%3C/text%3E%3C/svg%3E" alt="Lisa Wang">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">Lisa Wang</p>
+                                    <p class="text-xs text-gray-500">3L • GPA: 3.6 • Clinic</p>
+                                </div>
+                            </div>
+                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                Active
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Second Row -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 min-w-0 mt-8">
+            <!-- Applications Open for Students -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                <div class="p-4 sm:p-6 border-b border-brand-orange-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-900 font-sans">Applications Open for Students</h3>
+                            <p class="text-sm text-gray-500">Available opportunities</p>
+                        </div>
+                        <button class="text-brand-blue-600 hover:text-brand-blue-500 text-sm font-medium" onclick="viewOpenApplications()">
+                            View All
+                        </button>
+                    </div>
+                </div>
+                <div class="p-4 sm:p-6">
+                    <div class="space-y-4">
+                        <!-- Application 1 -->
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <h4 class="text-sm font-medium text-gray-900">Federal District Court Clerkship</h4>
+                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                    Open
+                                </span>
+                            </div>
+                            <p class="text-xs text-gray-600 mb-2">Judge Martinez • Eastern District of Massachusetts</p>
+                            <div class="flex items-center justify-between text-xs text-gray-500">
+                                <span>Deadline: March 15, 2024</span>
+                                <span>12 interested</span>
+                            </div>
+                        </div>
+
+                        <!-- Application 2 -->
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <h4 class="text-sm font-medium text-gray-900">DOJ Honors Program</h4>
+                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                    Open
+                                </span>
+                            </div>
+                            <p class="text-xs text-gray-600 mb-2">Civil Rights Division • Washington, DC</p>
+                            <div class="flex items-center justify-between text-xs text-gray-500">
+                                <span>Deadline: March 29, 2024</span>
+                                <span>8 interested</span>
+                            </div>
+                        </div>
+
+                        <!-- Application 3 -->
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <h4 class="text-sm font-medium text-gray-900">State Supreme Court Clerkship</h4>
+                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                    Closing Soon
+                                </span>
+                            </div>
+                            <p class="text-xs text-gray-600 mb-2">Justice Williams • Massachusetts Supreme Court</p>
+                            <div class="flex items-center justify-between text-xs text-gray-500">
+                                <span>Deadline: March 22, 2024</span>
+                                <span>15 interested</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Career Services Team -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                <div class="p-4 sm:p-6 border-b border-brand-orange-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-900 font-sans">Career Services Team</h3>
+                            <p class="text-sm text-gray-500">Team members and availability</p>
+                        </div>
+                        <button class="text-brand-blue-600 hover:text-brand-blue-500 text-sm font-medium" onclick="manageTeam()">
+                            Manage
+                        </button>
+                    </div>
+                </div>
+                <div class="p-4 sm:p-6">
+                    <div class="space-y-4">
+                        <!-- Team Member 1 -->
+                        <div class="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
+                            <div class="flex items-center space-x-3">
+                                <img class="h-8 w-8 rounded-full" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%237c3aed'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='32' font-family='Arial'%3EPJ%3C/text%3E%3C/svg%3E" alt="Prof. Patricia Johnson">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">Prof. Patricia Johnson</p>
+                                    <p class="text-xs text-gray-500">Senior Career Counselor</p>
+                                </div>
+                            </div>
+                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                Available
+                            </span>
+                        </div>
+
+                        <!-- Team Member 2 -->
+                        <div class="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
+                            <div class="flex items-center space-x-3">
+                                <img class="h-8 w-8 rounded-full" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23f59e0b'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='32' font-family='Arial'%3EMS%3C/text%3E%3C/svg%3E" alt="Mark Stevens">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">Mark Stevens</p>
+                                    <p class="text-xs text-gray-500">Clerkship Coordinator</p>
+                                </div>
+                            </div>
+                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                In Meeting
+                            </span>
+                        </div>
+
+                        <!-- Team Member 3 -->
+                        <div class="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
+                            <div class="flex items-center space-x-3">
+                                <img class="h-8 w-8 rounded-full" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23ec4899'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='32' font-family='Arial'%3EAT%3C/text%3E%3C/svg%3E" alt="Anna Taylor">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">Anna Taylor</p>
+                                    <p class="text-xs text-gray-500">Public Interest Advisor</p>
+                                </div>
+                            </div>
+                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                Available
+                            </span>
+                        </div>
+
+                        <!-- Team Member 4 -->
+                        <div class="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
+                            <div class="flex items-center space-x-3">
+                                <img class="h-8 w-8 rounded-full" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%2310b981'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='32' font-family='Arial'%3ERB%3C/text%3E%3C/svg%3E" alt="Robert Brown">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">Robert Brown</p>
+                                    <p class="text-xs text-gray-500">Private Sector Advisor</p>
+                                </div>
+                            </div>
+                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                Out of Office
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </main>
+
+    <!-- Orange Footer Line -->
+    <div class="fixed bottom-0 left-0 right-0 bg-brand-orange-500 h-6 z-10"></div>
+
+    <script>
+        // Action functions
+        function showApplicants() {
+            alert('Navigating to Applicants page...\n\nThis would show the full applicants list with filtering and management options.');
+        }
+
+        function generateReport() {
+            alert('Generating comprehensive report...\n\nThis would create:\n• Application statistics\n• Placement outcomes\n• Student progress analytics\n• Deadline summaries\n• Performance metrics');
+        }
+
+        function refreshData() {
+            alert('Refreshing dashboard data...\n\nThis would:\n• Update all metrics\n• Refresh active applicants\n• Sync latest application statuses\n• Update team availability');
+        }
+
+        function viewActiveApplicants() {
+            alert('Viewing all active applicants...\n\nThis would show:\n• Complete list of students currently applying\n• Application status for each\n• Filtering by track/program\n• Quick actions for each applicant');
+        }
+
+        function viewAllStudents() {
+            alert('Viewing all students...\n\nThis would show:\n• Complete student directory\n• Academic information and GPAs\n• Activity status\n• Contact information\n• Application history');
+        }
+
+        function viewOpenApplications() {
+            alert('Viewing all open applications...\n\nThis would show:\n• All available opportunities\n• Deadline information\n• Student interest levels\n• Application requirements\n• Manage postings');
+        }
+
+        function manageTeam() {
+            alert('Managing career services team...\n\nThis would allow:\n• Edit team member information\n• Update availability schedules\n• Assign specialization areas\n• Manage contact information\n• Adjust workload distribution');
+        }
+
+        function viewCalendar() {
+            alert('Opening calendar view...\n\nThis would show:\n• Full calendar interface\n• All deadlines and events\n• Interview schedules\n• Important dates\n• Reminder settings');
+        }
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            if (mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.remove('hidden');
+            } else {
+                mobileMenu.classList.add('hidden');
+            }
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'979f4972564b0ce8',t:'MTc1NzAwNzc4Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
