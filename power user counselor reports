@@ -1,0 +1,1770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports | NCSC CORA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-blue': {
+                            600: '#083156',
+                            500: '#3F86C7', 
+                            400: '#DEEBFC'
+                        },
+                        'brand-green': {
+                            500: '#559D76'
+                        },
+                        'brand-gold': {
+                            500: '#D3A62A'
+                        },
+                        'brand-orange': {
+                            500: '#BE561F'
+                        }
+                    },
+                    fontFamily: {
+                        'serif': ['Spectral', 'Georgia', 'serif'],
+                        'sans': ['Public Sans', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@300;400;500;600;700&family=Public+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="min-h-screen font-sans overflow-x-hidden" style="background: linear-gradient(0deg, #f2eff8 35%, #deebfc 65%);">
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-sm border-b border-gray-200 w-full" role="navigation">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16 min-w-0">
+                <!-- Logo and Title -->
+                <div class="flex items-center min-w-0 flex-shrink-0">
+                    <div class="bg-brand-blue-600 text-white rounded-lg p-2 mr-2 sm:mr-3 flex-shrink-0" aria-hidden="true">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                            <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z"/>
+                        </svg>
+                    </div>
+                    <div class="min-w-0">
+                        <h1 class="text-lg sm:text-xl font-semibold text-gray-900 truncate">NCSC CORA</h1>
+                        <p class="text-xs sm:text-sm text-gray-500 truncate">Court Opportunities & Resources</p>
+                    </div>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="nav-link text-black hover:text-gray-700 pb-1" onclick="showDashboard()">
+                        Dashboard
+                    </a>
+                    <a href="#" class="nav-link text-black hover:text-gray-700 pb-1" onclick="showApplicants()">
+                        Applicants
+                    </a>
+                    <a href="#" class="nav-link text-black hover:text-gray-700 pb-1" onclick="showApplications()">
+                        Applications
+                    </a>
+                    <span class="nav-link text-black pb-1 cursor-default">
+                        Resources
+                    </span>
+                    <a href="#" class="nav-link text-black hover:text-gray-700 pb-1" onclick="showReports()">
+                        Reports
+                    </a>
+                    <a href="#" class="nav-link text-black font-bold border-b-2 border-brand-orange-500 pb-1">
+                        Users
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button type="button" class="text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700" onclick="toggleMobileMenu()">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- User Profile -->
+                <div class="flex items-center space-x-2 sm:space-x-4 min-w-0 flex-shrink-0">
+                    <div class="hidden sm:flex items-center space-x-2 flex-shrink-0">
+                        <div class="w-2 h-2 bg-purple-400 rounded-full"></div>
+                        <span class="text-sm text-gray-600">Counselor</span>
+                    </div>
+                    <div class="flex items-center space-x-2 min-w-0">
+                        <img class="h-8 w-8 rounded-full flex-shrink-0" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%237c3aed'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='32' font-family='Arial'%3EPJ%3C/text%3E%3C/svg%3E" alt="Counselor profile picture">
+                        <div class="text-sm hidden sm:block min-w-0">
+                            <p class="font-medium text-gray-900 truncate">Prof. Patricia Johnson</p>
+                            <p class="text-gray-500 truncate">Harvard Law School</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-200">
+            <div class="px-4 py-2 space-y-1">
+                <a href="#" class="block px-3 py-2 text-black hover:text-gray-700 hover:bg-gray-50 rounded-md" onclick="showDashboard()">Dashboard</a>
+                <a href="#" class="block px-3 py-2 text-black hover:text-gray-700 hover:bg-gray-50 rounded-md" onclick="showApplicants()">Applicants</a>
+                <a href="#" class="block px-3 py-2 text-black hover:text-gray-700 hover:bg-gray-50 rounded-md" onclick="showApplications()">Applications</a>
+                <span class="block px-3 py-2 text-black cursor-default rounded-md">Resources</span>
+                <a href="#" class="block px-3 py-2 text-black hover:text-gray-700 hover:bg-gray-50 rounded-md" onclick="showReports()">Reports</a>
+                <a href="#" class="block px-3 py-2 text-black font-bold bg-orange-50 border-l-4 border-brand-orange-500 rounded-md">Users</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8 w-full min-w-0" role="main">
+        <!-- Reports Page -->
+        <div id="reports-page" class="hidden">
+            <!-- Header Section -->
+            <div class="mb-6 sm:mb-8">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                    <div class="mb-4 sm:mb-0">
+                        <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 font-serif">Reports & Analytics</h2>
+                        <p class="text-gray-600 mt-1 text-sm sm:text-base">Harvard Law School • Data Insights & Performance Metrics</p>
+                    </div>
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-3 min-w-0">
+                        <select class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue-500 focus:border-brand-blue-500 bg-white text-sm">
+                            <option>Academic Year 2023-24</option>
+                            <option>Academic Year 2022-23</option>
+                            <option>Academic Year 2021-22</option>
+                            <option>Custom Date Range</option>
+                        </select>
+                        <button class="bg-gray-600 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors font-medium text-sm whitespace-nowrap mr-2 sm:mr-3" onclick="customizeReports()">
+                            <svg class="w-4 h-4 mr-1 sm:mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"/>
+                            </svg>
+                            Customize Reports
+                        </button>
+                        <button class="bg-brand-blue-600 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-brand-blue-500 focus:outline-none focus:ring-2 focus:ring-brand-blue-500 focus:ring-offset-2 transition-colors font-medium text-sm whitespace-nowrap" onclick="exportAllReports()">
+                            <svg class="w-4 h-4 mr-1 sm:mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a4 4 0 01-4-4V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                            Export All
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        <!-- Tab Navigation -->
+        <div class="mb-6">
+            <div class="border-b border-gray-200">
+                <nav class="-mb-px flex flex-wrap sm:space-x-8" aria-label="Tabs">
+                    <button onclick="showTab('applicants')" id="tab-applicants" class="tab-button border-brand-orange-500 text-brand-orange-600 whitespace-nowrap py-2 px-1 border-b-2 font-medium text-xs sm:text-sm mb-2 sm:mb-0 mr-4 sm:mr-0">
+                        <span class="hidden sm:inline">Applicants Analytics</span>
+                        <span class="sm:hidden">Applicants</span>
+                    </button>
+                    <button onclick="showTab('opportunities')" id="tab-opportunities" class="tab-button border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-2 px-1 border-b-2 font-medium text-xs sm:text-sm mb-2 sm:mb-0 mr-4 sm:mr-0">
+                        <span class="hidden sm:inline">Opportunities</span>
+                        <span class="sm:hidden">Opportunities</span>
+                    </button>
+                    <button onclick="showTab('outcomes')" id="tab-outcomes" class="tab-button border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-2 px-1 border-b-2 font-medium text-xs sm:text-sm mb-2 sm:mb-0 mr-4 sm:mr-0">
+                        <span class="hidden sm:inline">Outcomes</span>
+                        <span class="sm:hidden">Outcomes</span>
+                    </button>
+                    <button onclick="showTab('users')" id="tab-users" class="tab-button border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-2 px-1 border-b-2 font-medium text-xs sm:text-sm mb-2 sm:mb-0">
+                        <span class="hidden sm:inline">System Users</span>
+                        <span class="sm:hidden">Users</span>
+                    </button>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Applicants Analytics Tab -->
+        <div id="content-applicants" class="tab-content">
+            <!-- Key Metrics Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">Total Applicants</p>
+                            <p class="text-2xl font-bold text-gray-900">247</p>
+                            <p class="text-xs text-green-600">+12% from last year</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">Active Applications</p>
+                            <p class="text-2xl font-bold text-gray-900">189</p>
+                            <p class="text-xs text-blue-600">76% completion rate</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">Pending Review</p>
+                            <p class="text-2xl font-bold text-gray-900">43</p>
+                            <p class="text-xs text-orange-600">Avg. 3.2 days</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">Success Rate</p>
+                            <p class="text-2xl font-bold text-gray-900">68%</p>
+                            <p class="text-xs text-green-600">+5% improvement</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts and Analytics -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                <!-- Application Trends Chart -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-medium text-gray-900">Application Trends</h3>
+                        <button onclick="exportChart('trends')" class="text-sm text-brand-blue-600 hover:text-brand-blue-700">Export</button>
+                    </div>
+                    <div class="h-64 bg-gray-50 rounded-lg flex items-center justify-center">
+                        <div class="text-center">
+                            <svg class="w-12 h-12 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                            </svg>
+                            <p class="text-gray-500">Interactive Chart: Monthly Application Volume</p>
+                            <p class="text-xs text-gray-400 mt-1">Peak: March (45 applications)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Program Distribution -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-medium text-gray-900">Program Distribution</h3>
+                        <button onclick="exportChart('programs')" class="text-sm text-brand-blue-600 hover:text-brand-blue-700">Export</button>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600">Federal Clerkships</span>
+                            <span class="text-sm font-medium">89 (36%)</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-blue-600 h-2 rounded-full" style="width: 36%"></div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600">State Courts</span>
+                            <span class="text-sm font-medium">67 (27%)</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-green-600 h-2 rounded-full" style="width: 27%"></div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600">Public Interest</span>
+                            <span class="text-sm font-medium">54 (22%)</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-purple-600 h-2 rounded-full" style="width: 22%"></div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600">DOJ Programs</span>
+                            <span class="text-sm font-medium">37 (15%)</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-yellow-600 h-2 rounded-full" style="width: 15%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Demographics Table -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                <div class="p-6 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-medium text-gray-900">Student Demographics</h3>
+                        <button onclick="exportTable('demographics')" class="text-sm text-brand-blue-600 hover:text-brand-blue-700">Export Table</button>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Class Year</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Applications</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Success Rate</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Top Program</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">3L Students</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">156</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">142</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                        72%
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Federal Clerkships</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">2L Students</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">78</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">34</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                        58%
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Summer Programs</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">1L Students</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">13</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">13</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                        85%
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Internships</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Opportunities Tab -->
+        <div id="content-opportunities" class="tab-content hidden">
+            <!-- Opportunities Metrics -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6M8 8v6a2 2 0 002 2h4a2 2 0 002-2V8M8 8V6a2 2 0 012-2h4a2 2 0 012 2v2"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">Available Positions</p>
+                            <p class="text-2xl font-bold text-gray-900">342</p>
+                            <p class="text-xs text-green-600">+18% from last year</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">Application Rate</p>
+                            <p class="text-2xl font-bold text-gray-900">1.4</p>
+                            <p class="text-xs text-gray-600">Apps per position</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">High Competition</p>
+                            <p class="text-2xl font-bold text-gray-900">23</p>
+                            <p class="text-xs text-red-600">5+ apps per position</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-teal-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">Match Rate</p>
+                            <p class="text-2xl font-bold text-gray-900">84%</p>
+                            <p class="text-xs text-green-600">Above national avg</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Opportunities Analysis -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                <!-- Geographic Distribution -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-medium text-gray-900">Geographic Distribution</h3>
+                        <button onclick="exportChart('geography')" class="text-sm text-brand-blue-600 hover:text-brand-blue-700">Export</button>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600">Northeast</span>
+                            <span class="text-sm font-medium">134 positions</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-blue-600 h-2 rounded-full" style="width: 39%"></div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600">West Coast</span>
+                            <span class="text-sm font-medium">89 positions</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-green-600 h-2 rounded-full" style="width: 26%"></div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600">Southeast</span>
+                            <span class="text-sm font-medium">67 positions</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-purple-600 h-2 rounded-full" style="width: 20%"></div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600">Other Regions</span>
+                            <span class="text-sm font-medium">52 positions</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-yellow-600 h-2 rounded-full" style="width: 15%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Application Success Rates -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-medium text-gray-900">Success Rates by Program</h3>
+                        <button onclick="exportChart('success')" class="text-sm text-brand-blue-600 hover:text-brand-blue-700">Export</button>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600">State Courts</span>
+                            <span class="text-sm font-medium">78% success rate</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-green-600 h-2 rounded-full" style="width: 78%"></div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600">DOJ Programs</span>
+                            <span class="text-sm font-medium">65% success rate</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-blue-600 h-2 rounded-full" style="width: 65%"></div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600">Public Interest</span>
+                            <span class="text-sm font-medium">72% success rate</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-purple-600 h-2 rounded-full" style="width: 72%"></div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600">Federal Clerkships</span>
+                            <span class="text-sm font-medium">42% success rate</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-yellow-600 h-2 rounded-full" style="width: 42%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Top Opportunities Table -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                <div class="p-6 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-medium text-gray-900">Most Popular Opportunities</h3>
+                        <button onclick="exportTable('opportunities')" class="text-sm text-brand-blue-600 hover:text-brand-blue-700">Export Table</button>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Position</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Court/Organization</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Applications</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Competition</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Success Rate</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Law Clerk</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">U.S. Supreme Court</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">12</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                        Very High
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">8%</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Law Clerk</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1st Circuit Court</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">23</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
+                                        High
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">35%</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Attorney</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">DOJ Honors Program</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">37</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                        Medium
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">54%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Outcomes Tab -->
+        <div id="content-outcomes" class="tab-content hidden">
+            <!-- Outcomes Metrics -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">Placement Rate</p>
+                            <p class="text-2xl font-bold text-gray-900">84%</p>
+                            <p class="text-xs text-green-600">Above target (80%)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">Interview Rate</p>
+                            <p class="text-2xl font-bold text-gray-900">67%</p>
+                            <p class="text-xs text-blue-600">Strong performance</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">Avg. Salary</p>
+                            <p class="text-2xl font-bold text-gray-900">$78K</p>
+                            <p class="text-xs text-gray-600">First year</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-rose-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">Satisfaction</p>
+                            <p class="text-2xl font-bold text-gray-900">4.6</p>
+                            <p class="text-xs text-green-600">Out of 5.0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Outcomes Analysis -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                <!-- Interview Rate Analysis -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-medium text-gray-900">Interview Rate Analysis</h3>
+                        <button onclick="exportChart('interviews')" class="text-sm text-brand-blue-600 hover:text-brand-blue-700">Export</button>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600">Federal Clerkships</span>
+                            <span class="text-sm font-medium">45% interview rate</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-blue-600 h-2 rounded-full" style="width: 45%"></div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600">State Courts</span>
+                            <span class="text-sm font-medium">68% interview rate</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-green-600 h-2 rounded-full" style="width: 68%"></div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600">Public Interest</span>
+                            <span class="text-sm font-medium">74% interview rate</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-purple-600 h-2 rounded-full" style="width: 74%"></div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600">DOJ Programs</span>
+                            <span class="text-sm font-medium">58% interview rate</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-yellow-600 h-2 rounded-full" style="width: 58%"></div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600">Private Sector</span>
+                            <span class="text-sm font-medium">82% interview rate</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-teal-600 h-2 rounded-full" style="width: 82%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Success Factors -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-medium text-gray-900">Success Factors</h3>
+                        <button onclick="exportChart('factors')" class="text-sm text-brand-blue-600 hover:text-brand-blue-700">Export</button>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600">Law Review</span>
+                            <span class="text-sm font-medium">+23% success rate</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-green-600 h-2 rounded-full" style="width: 85%"></div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600">Moot Court</span>
+                            <span class="text-sm font-medium">+18% success rate</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-blue-600 h-2 rounded-full" style="width: 72%"></div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600">Clinic Experience</span>
+                            <span class="text-sm font-medium">+15% success rate</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-purple-600 h-2 rounded-full" style="width: 68%"></div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600">Prior Experience</span>
+                            <span class="text-sm font-medium">+12% success rate</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-yellow-600 h-2 rounded-full" style="width: 60%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alumni Tracking -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                <div class="p-6 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-medium text-gray-900">Alumni Career Tracking</h3>
+                        <button onclick="exportTable('alumni')" class="text-sm text-brand-blue-600 hover:text-brand-blue-700">Export Table</button>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Graduation Year</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Initial Placement</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Current Position</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Avg. Salary Growth</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Satisfaction</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">2019</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">87% placed</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Senior Associate</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">+145%</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                        4.7/5
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">2020</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">82% placed</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Associate</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">+98%</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                        4.5/5
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">2021</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">89% placed</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Junior Associate</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">+67%</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                        4.6/5
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- System Users Tab -->
+        <div id="content-users" class="tab-content hidden">
+            <!-- User Metrics -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-cyan-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">Total Users</p>
+                            <p class="text-2xl font-bold text-gray-900">1,247</p>
+                            <p class="text-xs text-green-600">+8% this month</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">Active Users</p>
+                            <p class="text-2xl font-bold text-gray-900">892</p>
+                            <p class="text-xs text-blue-600">72% engagement</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">Daily Logins</p>
+                            <p class="text-2xl font-bold text-gray-900">234</p>
+                            <p class="text-xs text-gray-600">Avg. per day</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">Avg. Session</p>
+                            <p class="text-2xl font-bold text-gray-900">18m</p>
+                            <p class="text-xs text-green-600">+2m increase</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Analytics -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                <!-- User Types -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-medium text-gray-900">User Types</h3>
+                        <button onclick="exportChart('usertypes')" class="text-sm text-brand-blue-600 hover:text-brand-blue-700">Export</button>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600">Students</span>
+                            <span class="text-sm font-medium">1,089 (87%)</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-blue-600 h-2 rounded-full" style="width: 87%"></div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600">Counselors</span>
+                            <span class="text-sm font-medium">89 (7%)</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-green-600 h-2 rounded-full" style="width: 7%"></div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600">Recommenders</span>
+                            <span class="text-sm font-medium">45 (4%)</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-purple-600 h-2 rounded-full" style="width: 4%"></div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600">Administrators</span>
+                            <span class="text-sm font-medium">24 (2%)</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-yellow-600 h-2 rounded-full" style="width: 2%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity Trends -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-medium text-gray-900">Activity Trends</h3>
+                        <button onclick="exportChart('activity')" class="text-sm text-brand-blue-600 hover:text-brand-blue-700">Export</button>
+                    </div>
+                    <div class="h-64 bg-gray-50 rounded-lg flex items-center justify-center">
+                        <div class="text-center">
+                            <svg class="w-12 h-12 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                            </svg>
+                            <p class="text-gray-500">User Activity Over Time</p>
+                            <p class="text-xs text-gray-400 mt-1">Peak: Application Season</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Management Table -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                <div class="p-6 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-medium text-gray-900">User Management Overview</h3>
+                        <button onclick="exportTable('users')" class="text-sm text-brand-blue-600 hover:text-brand-blue-700">Export Table</button>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User Type</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Active (30d)</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Avg. Sessions</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Support Tickets</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Students</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1,089</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">823 (76%)</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">12.3</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                        23 (Low)
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Counselors</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">89</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">67 (75%)</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">8.7</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                        8 (Medium)
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Recommenders</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">45</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">32 (71%)</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">4.2</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                        3 (Low)
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- Users Management Page -->
+        <div id="users-page">
+            <!-- Header Section -->
+            <div class="mb-6 sm:mb-8">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                    <div class="mb-4 sm:mb-0">
+                        <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 font-serif">User Management</h2>
+                        <p class="text-gray-600 mt-1 text-sm sm:text-base">Harvard Law School • Manage Organization Users & Permissions</p>
+                    </div>
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-3 min-w-0">
+                        <button class="bg-brand-blue-600 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-brand-blue-500 focus:outline-none focus:ring-2 focus:ring-brand-blue-500 focus:ring-offset-2 transition-colors font-medium text-sm whitespace-nowrap" onclick="showAddUserModal()">
+                            <svg class="w-4 h-4 mr-1 sm:mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                            </svg>
+                            Add User
+                        </button>
+                        <button class="bg-gray-600 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors font-medium text-sm whitespace-nowrap" onclick="bulkActions()">
+                            <svg class="w-4 h-4 mr-1 sm:mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
+                            </svg>
+                            Bulk Actions
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Statistics Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">Total Users</p>
+                            <p class="text-2xl font-bold text-gray-900">1,247</p>
+                            <p class="text-xs text-green-600">+23 this month</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">Active Users</p>
+                            <p class="text-2xl font-bold text-gray-900">1,089</p>
+                            <p class="text-xs text-blue-600">87% of total</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">Pending Invites</p>
+                            <p class="text-2xl font-bold text-gray-900">34</p>
+                            <p class="text-xs text-orange-600">Awaiting response</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">Admin Users</p>
+                            <p class="text-2xl font-bold text-gray-900">12</p>
+                            <p class="text-xs text-gray-600">Full permissions</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search and Filter Bar -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6 mb-6">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0 sm:space-x-4">
+                    <div class="flex-1 min-w-0">
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                </svg>
+                            </div>
+                            <input type="text" id="userSearch" placeholder="Search users by name, email, or role..." class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue-500 focus:border-brand-blue-500 text-sm" onkeyup="filterUsers()">
+                        </div>
+                    </div>
+                    <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
+                        <select id="roleFilter" class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue-500 focus:border-brand-blue-500 bg-white text-sm" onchange="filterUsers()">
+                            <option value="">All Roles</option>
+                            <option value="admin">Administrator</option>
+                            <option value="counselor">Counselor</option>
+                            <option value="student">Student</option>
+                            <option value="recommender">Recommender</option>
+                        </select>
+                        <select id="statusFilter" class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue-500 focus:border-brand-blue-500 bg-white text-sm" onchange="filterUsers()">
+                            <option value="">All Status</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                            <option value="pending">Pending</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Users Table -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                <div class="p-6 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-medium text-gray-900">Organization Users</h3>
+                        <div class="flex items-center space-x-2">
+                            <button onclick="exportUsers()" class="text-sm text-brand-blue-600 hover:text-brand-blue-700">Export</button>
+                            <span class="text-gray-300">|</span>
+                            <button onclick="refreshUsers()" class="text-sm text-gray-600 hover:text-gray-700">Refresh</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200" id="usersTable">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <input type="checkbox" id="selectAll" class="rounded border-gray-300 text-brand-blue-600 focus:ring-brand-blue-500" onchange="toggleSelectAll()">
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Active</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Permissions</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200" id="usersTableBody">
+                            <!-- Sample Users -->
+                            <tr class="user-row" data-role="admin" data-status="active">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <input type="checkbox" class="user-checkbox rounded border-gray-300 text-brand-blue-600 focus:ring-brand-blue-500">
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <img class="h-10 w-10 rounded-full" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%237c3aed'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='32' font-family='Arial'%3EPJ%3C/text%3E%3C/svg%3E" alt="">
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900">Prof. Patricia Johnson</div>
+                                            <div class="text-sm text-gray-500">patricia.johnson@harvard.edu</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                                        Administrator
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                        Active
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2 hours ago</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <button onclick="showPermissions('patricia.johnson@harvard.edu')" class="text-brand-blue-600 hover:text-brand-blue-700 text-sm font-medium">
+                                        Manage
+                                    </button>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <div class="flex items-center space-x-2">
+                                        <button onclick="editUser('patricia.johnson@harvard.edu')" class="text-indigo-600 hover:text-indigo-900">Edit</button>
+                                        <button onclick="deactivateUser('patricia.johnson@harvard.edu')" class="text-red-600 hover:text-red-900">Deactivate</button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr class="user-row" data-role="counselor" data-status="active">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <input type="checkbox" class="user-checkbox rounded border-gray-300 text-brand-blue-600 focus:ring-brand-blue-500">
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <img class="h-10 w-10 rounded-full" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%2306b6d4'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='32' font-family='Arial'%3EMC%3C/text%3E%3C/svg%3E" alt="">
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900">Dr. Michael Chen</div>
+                                            <div class="text-sm text-gray-500">michael.chen@harvard.edu</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                        Counselor
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                        Active
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1 day ago</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <button onclick="showPermissions('michael.chen@harvard.edu')" class="text-brand-blue-600 hover:text-brand-blue-700 text-sm font-medium">
+                                        Manage
+                                    </button>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <div class="flex items-center space-x-2">
+                                        <button onclick="editUser('michael.chen@harvard.edu')" class="text-indigo-600 hover:text-indigo-900">Edit</button>
+                                        <button onclick="deactivateUser('michael.chen@harvard.edu')" class="text-red-600 hover:text-red-900">Deactivate</button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr class="user-row" data-role="student" data-status="active">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <input type="checkbox" class="user-checkbox rounded border-gray-300 text-brand-blue-600 focus:ring-brand-blue-500">
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <img class="h-10 w-10 rounded-full" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%2310b981'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='32' font-family='Arial'%3ESR%3C/text%3E%3C/svg%3E" alt="">
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900">Sarah Rodriguez</div>
+                                            <div class="text-sm text-gray-500">sarah.rodriguez@student.harvard.edu</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                        Student
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                        Active
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3 hours ago</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <button onclick="showPermissions('sarah.rodriguez@student.harvard.edu')" class="text-brand-blue-600 hover:text-brand-blue-700 text-sm font-medium">
+                                        Manage
+                                    </button>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <div class="flex items-center space-x-2">
+                                        <button onclick="editUser('sarah.rodriguez@student.harvard.edu')" class="text-indigo-600 hover:text-indigo-900">Edit</button>
+                                        <button onclick="deactivateUser('sarah.rodriguez@student.harvard.edu')" class="text-red-600 hover:text-red-900">Deactivate</button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr class="user-row" data-role="recommender" data-status="pending">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <input type="checkbox" class="user-checkbox rounded border-gray-300 text-brand-blue-600 focus:ring-brand-blue-500">
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <img class="h-10 w-10 rounded-full" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23f59e0b'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='32' font-family='Arial'%3EJD%3C/text%3E%3C/svg%3E" alt="">
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900">Judge Jennifer Davis</div>
+                                            <div class="text-sm text-gray-500">jennifer.davis@court.gov</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                        Recommender
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                        Pending
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Invited 2 days ago</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="text-gray-400 text-sm">Pending acceptance</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <div class="flex items-center space-x-2">
+                                        <button onclick="resendInvite('jennifer.davis@court.gov')" class="text-blue-600 hover:text-blue-900">Resend</button>
+                                        <button onclick="cancelInvite('jennifer.davis@court.gov')" class="text-red-600 hover:text-red-900">Cancel</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Pagination -->
+                <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+                    <div class="flex-1 flex justify-between sm:hidden">
+                        <button class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                            Previous
+                        </button>
+                        <button class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                            Next
+                        </button>
+                    </div>
+                    <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                        <div>
+                            <p class="text-sm text-gray-700">
+                                Showing <span class="font-medium">1</span> to <span class="font-medium">4</span> of <span class="font-medium">1,247</span> results
+                            </p>
+                        </div>
+                        <div>
+                            <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                                <button class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                    <span class="sr-only">Previous</span>
+                                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                    </svg>
+                                </button>
+                                <button class="bg-brand-blue-600 border-brand-blue-600 text-white relative inline-flex items-center px-4 py-2 border text-sm font-medium">1</button>
+                                <button class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">2</button>
+                                <button class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">3</button>
+                                <button class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                    <span class="sr-only">Next</span>
+                                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                                    </svg>
+                                </button>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add User Modal -->
+    <div id="addUserModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 hidden">
+        <div class="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white">
+            <div class="mt-3">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-medium text-gray-900">Add New User</h3>
+                    <button onclick="closeAddUserModal()" class="text-gray-400 hover:text-gray-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <form id="addUserForm" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                            <input type="text" id="firstName" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue-500 focus:border-brand-blue-500" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                            <input type="text" id="lastName" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue-500 focus:border-brand-blue-500" required>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                        <input type="email" id="email" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue-500 focus:border-brand-blue-500" required>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Role</label>
+                        <select id="role" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue-500 focus:border-brand-blue-500" required>
+                            <option value="">Select a role</option>
+                            <option value="admin">Administrator</option>
+                            <option value="counselor">Counselor</option>
+                            <option value="student">Student</option>
+                            <option value="recommender">Recommender</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Department/Organization</label>
+                        <input type="text" id="department" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue-500 focus:border-brand-blue-500">
+                    </div>
+                    
+                    <div class="flex items-center">
+                        <input type="checkbox" id="sendInvite" class="rounded border-gray-300 text-brand-blue-600 focus:ring-brand-blue-500" checked>
+                        <label for="sendInvite" class="ml-2 text-sm text-gray-700">Send invitation email</label>
+                    </div>
+                    
+                    <div class="flex justify-end space-x-3 pt-4">
+                        <button type="button" onclick="closeAddUserModal()" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+                            Cancel
+                        </button>
+                        <button type="submit" class="px-4 py-2 bg-brand-blue-600 text-white rounded-lg hover:bg-brand-blue-500">
+                            Add User
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Permissions Modal -->
+    <div id="permissionsModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 hidden">
+        <div class="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-2/3 shadow-lg rounded-md bg-white">
+            <div class="mt-3">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-medium text-gray-900">Manage Permissions</h3>
+                    <button onclick="closePermissionsModal()" class="text-gray-400 hover:text-gray-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div id="permissionsContent">
+                    <div class="mb-4">
+                        <h4 class="font-medium text-gray-900 mb-2">User: <span id="permissionsUserName">Prof. Patricia Johnson</span></h4>
+                        <p class="text-sm text-gray-600">Role: <span id="permissionsUserRole">Administrator</span></p>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <h5 class="font-medium text-gray-900 mb-3">Application Management</h5>
+                            <div class="space-y-2">
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="rounded border-gray-300 text-brand-blue-600 focus:ring-brand-blue-500" checked>
+                                    <span class="ml-2 text-sm text-gray-700">View all applications</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="rounded border-gray-300 text-brand-blue-600 focus:ring-brand-blue-500" checked>
+                                    <span class="ml-2 text-sm text-gray-700">Edit application status</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="rounded border-gray-300 text-brand-blue-600 focus:ring-brand-blue-500">
+                                    <span class="ml-2 text-sm text-gray-700">Delete applications</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h5 class="font-medium text-gray-900 mb-3">User Management</h5>
+                            <div class="space-y-2">
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="rounded border-gray-300 text-brand-blue-600 focus:ring-brand-blue-500" checked>
+                                    <span class="ml-2 text-sm text-gray-700">View user list</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="rounded border-gray-300 text-brand-blue-600 focus:ring-brand-blue-500" checked>
+                                    <span class="ml-2 text-sm text-gray-700">Add/remove users</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="rounded border-gray-300 text-brand-blue-600 focus:ring-brand-blue-500" checked>
+                                    <span class="ml-2 text-sm text-gray-700">Manage permissions</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h5 class="font-medium text-gray-900 mb-3">Reports & Analytics</h5>
+                            <div class="space-y-2">
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="rounded border-gray-300 text-brand-blue-600 focus:ring-brand-blue-500" checked>
+                                    <span class="ml-2 text-sm text-gray-700">View reports</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="rounded border-gray-300 text-brand-blue-600 focus:ring-brand-blue-500" checked>
+                                    <span class="ml-2 text-sm text-gray-700">Export data</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="rounded border-gray-300 text-brand-blue-600 focus:ring-brand-blue-500">
+                                    <span class="ml-2 text-sm text-gray-700">Configure analytics</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h5 class="font-medium text-gray-900 mb-3">System Settings</h5>
+                            <div class="space-y-2">
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="rounded border-gray-300 text-brand-blue-600 focus:ring-brand-blue-500" checked>
+                                    <span class="ml-2 text-sm text-gray-700">System configuration</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="rounded border-gray-300 text-brand-blue-600 focus:ring-brand-blue-500">
+                                    <span class="ml-2 text-sm text-gray-700">Backup & restore</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-end space-x-3 pt-6 border-t border-gray-200 mt-6">
+                        <button onclick="closePermissionsModal()" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+                            Cancel
+                        </button>
+                        <button onclick="savePermissions()" class="px-4 py-2 bg-brand-blue-600 text-white rounded-lg hover:bg-brand-blue-500">
+                            Save Changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Orange Footer Line -->
+    <div class="fixed bottom-0 left-0 right-0 bg-brand-orange-500 h-6 z-10"></div>
+
+    <script>
+        // Tab functionality
+        function showTab(tabName) {
+            // Hide all tab contents
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.add('hidden'));
+            
+            // Remove active state from all tabs
+            const tabs = document.querySelectorAll('.tab-button');
+            tabs.forEach(tab => {
+                tab.classList.remove('border-brand-orange-500', 'text-brand-orange-600');
+                tab.classList.add('border-transparent', 'text-gray-500');
+            });
+            
+            // Show selected tab content
+            document.getElementById(`content-${tabName}`).classList.remove('hidden');
+            
+            // Add active state to selected tab
+            const activeTab = document.getElementById(`tab-${tabName}`);
+            activeTab.classList.remove('border-transparent', 'text-gray-500');
+            activeTab.classList.add('border-brand-orange-500', 'text-brand-orange-600');
+        }
+
+        // Navigation functions
+        function showDashboard() {
+            alert('Navigating to Dashboard...');
+        }
+
+        function showApplicants() {
+            alert('Navigating to Applicants page...');
+        }
+
+        function showApplications() {
+            alert('Navigating to Applications page...');
+        }
+
+        function showReports() {
+            // Hide users page and show reports page
+            document.getElementById('users-page').classList.add('hidden');
+            document.getElementById('reports-page').classList.remove('hidden');
+            
+            // Update navigation highlighting
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('font-bold', 'border-b-2', 'border-brand-orange-500');
+                link.classList.add('hover:text-gray-700');
+            });
+            
+            // Highlight Reports nav item
+            const reportsLink = document.querySelector('a[onclick="showReports()"]');
+            if (reportsLink) {
+                reportsLink.classList.add('font-bold', 'border-b-2', 'border-brand-orange-500');
+                reportsLink.classList.remove('hover:text-gray-700');
+            }
+        }
+
+        function showUsers() {
+            // Hide reports page and show users page
+            document.getElementById('reports-page').classList.add('hidden');
+            document.getElementById('users-page').classList.remove('hidden');
+            
+            // Update navigation highlighting
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('font-bold', 'border-b-2', 'border-brand-orange-500');
+                link.classList.add('hover:text-gray-700');
+            });
+            
+            // Highlight Users nav item
+            const usersLink = document.querySelector('a[onclick="showUsers()"]');
+            if (usersLink) {
+                usersLink.classList.add('font-bold', 'border-b-2', 'border-brand-orange-500');
+                usersLink.classList.remove('hover:text-gray-700');
+            }
+        }
+
+        // User Management Functions
+        function showAddUserModal() {
+            document.getElementById('addUserModal').classList.remove('hidden');
+        }
+
+        function closeAddUserModal() {
+            document.getElementById('addUserModal').classList.add('hidden');
+            document.getElementById('addUserForm').reset();
+        }
+
+        function showPermissions(userEmail) {
+            // Update modal content based on user
+            const userName = userEmail.includes('patricia') ? 'Prof. Patricia Johnson' : 
+                           userEmail.includes('michael') ? 'Dr. Michael Chen' :
+                           userEmail.includes('sarah') ? 'Sarah Rodriguez' : 'Judge Jennifer Davis';
+            
+            const userRole = userEmail.includes('patricia') ? 'Administrator' : 
+                           userEmail.includes('michael') ? 'Counselor' :
+                           userEmail.includes('sarah') ? 'Student' : 'Recommender';
+            
+            document.getElementById('permissionsUserName').textContent = userName;
+            document.getElementById('permissionsUserRole').textContent = userRole;
+            
+            document.getElementById('permissionsModal').classList.remove('hidden');
+        }
+
+        function closePermissionsModal() {
+            document.getElementById('permissionsModal').classList.add('hidden');
+        }
+
+        function savePermissions() {
+            alert('Permissions updated successfully!\n\nChanges saved for user permissions.');
+            closePermissionsModal();
+        }
+
+        function editUser(userEmail) {
+            alert(`Edit User: ${userEmail}\n\nThis would open the user edit form with:\n• Personal information\n• Role assignment\n• Department/organization\n• Account status`);
+        }
+
+        function deactivateUser(userEmail) {
+            if (confirm(`Are you sure you want to deactivate ${userEmail}?\n\nThis will:\n• Disable their account access\n• Preserve their data\n• Allow reactivation later`)) {
+                alert(`User ${userEmail} has been deactivated.`);
+            }
+        }
+
+        function resendInvite(userEmail) {
+            alert(`Invitation resent to ${userEmail}\n\nA new invitation email has been sent with:\n• Account setup instructions\n• Temporary access link\n• Role information`);
+        }
+
+        function cancelInvite(userEmail) {
+            if (confirm(`Cancel invitation for ${userEmail}?\n\nThis will remove them from pending invitations.`)) {
+                alert(`Invitation cancelled for ${userEmail}`);
+            }
+        }
+
+        function bulkActions() {
+            const selectedUsers = document.querySelectorAll('.user-checkbox:checked');
+            if (selectedUsers.length === 0) {
+                alert('Please select users to perform bulk actions.');
+                return;
+            }
+            
+            alert(`Bulk Actions Menu\n\nSelected ${selectedUsers.length} users\n\nAvailable actions:\n• Activate/Deactivate\n• Change roles\n• Send notifications\n• Export user data\n• Delete users`);
+        }
+
+        function toggleSelectAll() {
+            const selectAll = document.getElementById('selectAll');
+            const userCheckboxes = document.querySelectorAll('.user-checkbox');
+            
+            userCheckboxes.forEach(checkbox => {
+                checkbox.checked = selectAll.checked;
+            });
+        }
+
+        function filterUsers() {
+            const searchTerm = document.getElementById('userSearch').value.toLowerCase();
+            const roleFilter = document.getElementById('roleFilter').value;
+            const statusFilter = document.getElementById('statusFilter').value;
+            const userRows = document.querySelectorAll('.user-row');
+            
+            userRows.forEach(row => {
+                const userName = row.querySelector('.text-sm.font-medium.text-gray-900').textContent.toLowerCase();
+                const userEmail = row.querySelector('.text-sm.text-gray-500').textContent.toLowerCase();
+                const userRole = row.getAttribute('data-role');
+                const userStatus = row.getAttribute('data-status');
+                
+                const matchesSearch = userName.includes(searchTerm) || userEmail.includes(searchTerm);
+                const matchesRole = !roleFilter || userRole === roleFilter;
+                const matchesStatus = !statusFilter || userStatus === statusFilter;
+                
+                if (matchesSearch && matchesRole && matchesStatus) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        function exportUsers() {
+            alert('Export Users\n\nThis would generate:\n• Complete user list with roles\n• Permission assignments\n• Activity statistics\n• Contact information\n• Excel/CSV format options');
+        }
+
+        function refreshUsers() {
+            alert('Refreshing user data...\n\nUpdating:\n• User status\n• Last activity times\n• Permission changes\n• New registrations');
+        }
+
+        // Add User Form Submission
+        document.getElementById('addUserForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const email = document.getElementById('email').value;
+            const role = document.getElementById('role').value;
+            const department = document.getElementById('department').value;
+            const sendInvite = document.getElementById('sendInvite').checked;
+            
+            alert(`User Added Successfully!\n\nName: ${firstName} ${lastName}\nEmail: ${email}\nRole: ${role}\nDepartment: ${department}\n\n${sendInvite ? 'Invitation email sent!' : 'No invitation sent - manual setup required'}`);
+            
+            closeAddUserModal();
+        });
+
+        // Customize Reports function
+        function customizeReports() {
+            alert('Customize Reports\n\nThis would open a configuration panel with:\n• Select specific metrics to include\n• Choose date ranges and filters\n• Customize chart types and layouts\n• Set automated report schedules\n• Configure recipient lists\n• Brand and format options\n• Save custom report templates');
+        }
+
+        // Export functions
+        function exportAllReports() {
+            alert('Exporting All Reports\n\nThis would generate:\n• Comprehensive analytics package\n• All charts and tables\n• Executive summary report\n• Raw data exports\n• Formatted for presentation');
+        }
+
+        function exportChart(chartType) {
+            const chartNames = {
+                'trends': 'Application Trends Chart',
+                'programs': 'Program Distribution Chart',
+                'geography': 'Geographic Distribution Chart',
+                'competition': 'Competition Analysis Chart',
+                'careers': 'Career Path Outcomes Chart',
+                'factors': 'Success Factors Chart',
+                'usertypes': 'User Types Chart',
+                'activity': 'Activity Trends Chart'
+            };
+            
+            alert(`Exporting ${chartNames[chartType]}\n\nThis would generate:\n• High-resolution PNG/PDF\n• Interactive web version\n• Raw data CSV\n• Chart configuration file`);
+        }
+
+        function exportTable(tableType) {
+            const tableNames = {
+                'demographics': 'Student Demographics Table',
+                'opportunities': 'Opportunities Analysis Table',
+                'alumni': 'Alumni Career Tracking Table',
+                'users': 'User Management Table'
+            };
+            
+            alert(`Exporting ${tableNames[tableType]}\n\nThis would generate:\n• Excel spreadsheet\n• CSV data file\n• Formatted PDF report\n• Summary statistics`);
+        }
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            if (mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.remove('hidden');
+            } else {
+                mobileMenu.classList.add('hidden');
+            }
+        }
+
+        // Initialize with Applicants tab active
+        document.addEventListener('DOMContentLoaded', function() {
+            showTab('applicants');
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'979f59da849941fb',t:'MTc1NzAwODQ1NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
