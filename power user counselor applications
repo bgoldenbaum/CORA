@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applications | NCSC CORA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-blue': {
+                            600: '#083156',
+                            500: '#3F86C7', 
+                            400: '#DEEBFC'
+                        },
+                        'brand-green': {
+                            500: '#559D76'
+                        },
+                        'brand-gold': {
+                            500: '#D3A62A'
+                        },
+                        'brand-orange': {
+                            500: '#BE561F'
+                        }
+                    },
+                    fontFamily: {
+                        'serif': ['Spectral', 'Georgia', 'serif'],
+                        'sans': ['Public Sans', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@300;400;500;600;700&family=Public+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="min-h-screen font-sans overflow-x-hidden" style="background: linear-gradient(0deg, #f2eff8 35%, #deebfc 65%);">
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-sm border-b border-gray-200 w-full" role="navigation">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16 min-w-0">
+                <!-- Logo and Title -->
+                <div class="flex items-center min-w-0 flex-shrink-0">
+                    <div class="bg-brand-blue-600 text-white rounded-lg p-2 mr-2 sm:mr-3 flex-shrink-0" aria-hidden="true">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                            <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z"/>
+                        </svg>
+                    </div>
+                    <div class="min-w-0">
+                        <h1 class="text-lg sm:text-xl font-semibold text-gray-900 truncate">NCSC CORA</h1>
+                        <p class="text-xs sm:text-sm text-gray-500 truncate">Court Opportunities & Resources</p>
+                    </div>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="nav-link text-black hover:text-gray-700 pb-1" onclick="showDashboard()">
+                        Dashboard
+                    </a>
+                    <a href="#" class="nav-link text-black hover:text-gray-700 pb-1" onclick="showApplicants()">
+                        Applicants
+                    </a>
+                    <a href="#" class="nav-link text-black font-bold border-b-2 border-brand-orange-500 pb-1">
+                        Applications
+                    </a>
+                    <a href="#" class="nav-link text-black hover:text-gray-700 pb-1">
+                        Reports
+                    </a>
+                    <a href="#" class="nav-link text-black hover:text-gray-700 pb-1">
+                        Resources
+                    </a>
+                    <a href="#" class="nav-link text-black hover:text-gray-700 pb-1">
+                        Users
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button type="button" class="text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700" onclick="toggleMobileMenu()">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- User Profile -->
+                <div class="flex items-center space-x-2 sm:space-x-4 min-w-0 flex-shrink-0">
+                    <div class="hidden sm:flex items-center space-x-2 flex-shrink-0">
+                        <div class="w-2 h-2 bg-purple-400 rounded-full"></div>
+                        <span class="text-sm text-gray-600">Counselor</span>
+                    </div>
+                    <div class="flex items-center space-x-2 min-w-0">
+                        <img class="h-8 w-8 rounded-full flex-shrink-0" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%237c3aed'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='32' font-family='Arial'%3EPJ%3C/text%3E%3C/svg%3E" alt="Counselor profile picture">
+                        <div class="text-sm hidden sm:block min-w-0">
+                            <p class="font-medium text-gray-900 truncate">Prof. Patricia Johnson</p>
+                            <p class="text-gray-500 truncate">Harvard Law School</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-200">
+            <div class="px-4 py-2 space-y-1">
+                <a href="#" class="block px-3 py-2 text-black hover:text-gray-700 hover:bg-gray-50 rounded-md" onclick="showDashboard()">Dashboard</a>
+                <a href="#" class="block px-3 py-2 text-black hover:text-gray-700 hover:bg-gray-50 rounded-md" onclick="showApplicants()">Applicants</a>
+                <a href="#" class="block px-3 py-2 text-black font-bold bg-orange-50 border-l-4 border-brand-orange-500 rounded-md">Applications</a>
+                <a href="#" class="block px-3 py-2 text-black hover:text-gray-700 hover:bg-gray-50 rounded-md">Reports</a>
+                <a href="#" class="block px-3 py-2 text-black hover:text-gray-700 hover:bg-gray-50 rounded-md">Resources</a>
+                <a href="#" class="block px-3 py-2 text-black hover:text-gray-700 hover:bg-gray-50 rounded-md">Users</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8 w-full min-w-0" role="main">
+        <!-- Header Section -->
+        <div class="mb-6 sm:mb-8">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                <div class="mb-4 sm:mb-0">
+                    <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 font-serif">Applications Management</h2>
+                    <p class="text-gray-600 mt-1 text-sm sm:text-base">Harvard Law School • Review & Tag Applications</p>
+                </div>
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-3 min-w-0">
+                    <button class="bg-white border border-gray-300 text-gray-700 px-3 sm:px-4 py-2 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-brand-blue-500 focus:ring-offset-2 transition-colors font-medium text-sm whitespace-nowrap" onclick="exportData()">
+                        <svg class="w-4 h-4 mr-1 sm:mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a4 4 0 01-4-4V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        Export
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter and Search Bar -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6 mb-6">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0 lg:space-x-4">
+                <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3 flex-1">
+                    <div class="relative flex-1">
+                        <input type="text" placeholder="Search applicants..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue-500 focus:border-brand-blue-500">
+                        <svg class="absolute left-3 top-2.5 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                    </div>
+                    <select class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue-500 focus:border-brand-blue-500 bg-white">
+                        <option>All Status</option>
+                        <option>Needs Review</option>
+                        <option>Under Review</option>
+                        <option>Pending Assignment</option>
+                        <option>Submitted</option>
+                    </select>
+                    <select class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue-500 focus:border-brand-blue-500 bg-white">
+                        <option>All Programs</option>
+                        <option>Federal Clerkship</option>
+                        <option>State Supreme Court</option>
+                        <option>DOJ Honors</option>
+                        <option>Public Interest</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="mb-6">
+            <div class="border-b border-gray-200">
+                <nav class="-mb-px flex flex-wrap sm:space-x-8" aria-label="Tabs">
+                    <button onclick="showTab('tag-assign')" id="tab-tag-assign" class="tab-button border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-2 px-1 border-b-2 font-medium text-xs sm:text-sm mb-2 sm:mb-0 mr-4 sm:mr-0">
+                        <span class="hidden sm:inline">Tag & Assign</span>
+                        <span class="sm:hidden">Tag</span>
+                        <span class="bg-gray-100 text-gray-900 ml-1 sm:ml-2 py-0.5 px-1.5 sm:px-2.5 rounded-full text-xs font-medium">12</span>
+                    </button>
+                    <button onclick="showTab('review')" id="tab-review" class="tab-button border-brand-orange-500 text-brand-orange-600 whitespace-nowrap py-2 px-1 border-b-2 font-medium text-xs sm:text-sm mb-2 sm:mb-0 mr-4 sm:mr-0">
+                        <span class="hidden sm:inline">Review Applications</span>
+                        <span class="sm:hidden">Review</span>
+                        <span class="bg-orange-100 text-orange-900 ml-1 sm:ml-2 py-0.5 px-1.5 sm:px-2.5 rounded-full text-xs font-medium">8</span>
+                    </button>
+                    <button onclick="showTab('pending')" id="tab-pending" class="tab-button border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-2 px-1 border-b-2 font-medium text-xs sm:text-sm mb-2 sm:mb-0 mr-4 sm:mr-0">
+                        <span class="hidden sm:inline">Pending Review</span>
+                        <span class="sm:hidden">Pending</span>
+                        <span class="bg-gray-100 text-gray-900 ml-1 sm:ml-2 py-0.5 px-1.5 sm:px-2.5 rounded-full text-xs font-medium">15</span>
+                    </button>
+                    <button onclick="showTab('submitted')" id="tab-submitted" class="tab-button border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-2 px-1 border-b-2 font-medium text-xs sm:text-sm mb-2 sm:mb-0">
+                        <span class="hidden sm:inline">Submitted Applications</span>
+                        <span class="sm:hidden">Submitted</span>
+                        <span class="bg-gray-100 text-gray-900 ml-1 sm:ml-2 py-0.5 px-1.5 sm:px-2.5 rounded-full text-xs font-medium">43</span>
+                    </button>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Tab Content -->
+        <div id="content-tag-assign" class="tab-content hidden">
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                <div class="p-4 sm:p-6 border-b border-brand-orange-500">
+                    <h3 class="text-lg font-medium text-gray-900 font-sans">Tag Counselors & Recommenders</h3>
+                    <p class="text-sm text-gray-500 mt-1">Assign counselors and recommenders to applicants</p>
+                </div>
+                <div class="p-4 sm:p-6">
+                    <div class="space-y-4">
+                        <!-- Applicant 1 -->
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <div class="flex flex-col space-y-3">
+                                <div class="flex items-center space-x-3">
+                                    <input type="checkbox" class="h-4 w-4 text-brand-blue-600 focus:ring-brand-blue-500 border-gray-300 rounded flex-shrink-0">
+                                    <img class="h-10 w-10 rounded-full flex-shrink-0" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%234f46e5'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='32' font-family='Arial'%3EAR%3C/text%3E%3C/svg%3E" alt="Alex Rodriguez">
+                                    <div class="min-w-0 flex-1">
+                                        <p class="text-sm font-medium text-gray-900">Alex Rodriguez</p>
+                                        <p class="text-xs text-gray-500">3L • Federal District Court Clerkship</p>
+                                        <p class="text-xs text-gray-400">Applied: March 1, 2024</p>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col space-y-2">
+                                    <select class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-brand-blue-500 focus:border-brand-blue-500 bg-white">
+                                        <option>Assign Counselor</option>
+                                        <option>Prof. Patricia Johnson</option>
+                                        <option>Mark Stevens</option>
+                                        <option>Anna Taylor</option>
+                                    </select>
+                                    <select class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-brand-blue-500 focus:border-brand-blue-500 bg-white">
+                                        <option>Assign Recommender</option>
+                                        <option>Prof. Sarah Mitchell</option>
+                                        <option>Judge Williams</option>
+                                        <option>Prof. David Chen</option>
+                                    </select>
+                                    <button onclick="assignTags('Alex Rodriguez')" class="w-full px-3 py-2 text-sm bg-brand-blue-600 text-white rounded-md hover:bg-brand-blue-700 focus:outline-none focus:ring-2 focus:ring-brand-blue-500">
+                                        Assign
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Applicant 2 -->
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <div class="flex flex-col space-y-3">
+                                <div class="flex items-center space-x-3">
+                                    <input type="checkbox" class="h-4 w-4 text-brand-blue-600 focus:ring-brand-blue-500 border-gray-300 rounded flex-shrink-0">
+                                    <img class="h-10 w-10 rounded-full flex-shrink-0" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%2310b981'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='32' font-family='Arial'%3ESC%3C/text%3E%3C/svg%3E" alt="Sarah Chen">
+                                    <div class="min-w-0 flex-1">
+                                        <p class="text-sm font-medium text-gray-900">Sarah Chen</p>
+                                        <p class="text-xs text-gray-500">3L • State Supreme Court Clerkship</p>
+                                        <p class="text-xs text-gray-400">Applied: February 28, 2024</p>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col space-y-2">
+                                    <select class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-brand-blue-500 focus:border-brand-blue-500 bg-white">
+                                        <option>Assign Counselor</option>
+                                        <option>Prof. Patricia Johnson</option>
+                                        <option>Mark Stevens</option>
+                                        <option>Anna Taylor</option>
+                                    </select>
+                                    <select class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-brand-blue-500 focus:border-brand-blue-500 bg-white">
+                                        <option>Assign Recommender</option>
+                                        <option>Prof. Sarah Mitchell</option>
+                                        <option>Judge Williams</option>
+                                        <option>Prof. David Chen</option>
+                                    </select>
+                                    <button onclick="assignTags('Sarah Chen')" class="w-full px-3 py-2 text-sm bg-brand-blue-600 text-white rounded-md hover:bg-brand-blue-700 focus:outline-none focus:ring-2 focus:ring-brand-blue-500">
+                                        Assign
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Applicant 3 -->
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <div class="flex flex-col space-y-3">
+                                <div class="flex items-center space-x-3">
+                                    <input type="checkbox" class="h-4 w-4 text-brand-blue-600 focus:ring-brand-blue-500 border-gray-300 rounded flex-shrink-0">
+                                    <img class="h-10 w-10 rounded-full flex-shrink-0" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23f59e0b'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='32' font-family='Arial'%3EMK%3C/text%3E%3C/svg%3E" alt="Michael Kim">
+                                    <div class="min-w-0 flex-1">
+                                        <p class="text-sm font-medium text-gray-900">Michael Kim</p>
+                                        <p class="text-xs text-gray-500">3L • DOJ Honors Program</p>
+                                        <p class="text-xs text-gray-400">Applied: March 3, 2024</p>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col space-y-2">
+                                    <select class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-brand-blue-500 focus:border-brand-blue-500 bg-white">
+                                        <option>Assign Counselor</option>
+                                        <option>Prof. Patricia Johnson</option>
+                                        <option>Mark Stevens</option>
+                                        <option>Anna Taylor</option>
+                                    </select>
+                                    <select class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-brand-blue-500 focus:border-brand-blue-500 bg-white">
+                                        <option>Assign Recommender</option>
+                                        <option>Prof. Sarah Mitchell</option>
+                                        <option>Judge Williams</option>
+                                        <option>Prof. David Chen</option>
+                                    </select>
+                                    <button onclick="assignTags('Michael Kim')" class="w-full px-3 py-2 text-sm bg-brand-blue-600 text-white rounded-md hover:bg-brand-blue-700 focus:outline-none focus:ring-2 focus:ring-brand-blue-500">
+                                        Assign
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="content-review" class="tab-content">
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                <div class="p-4 sm:p-6 border-b border-brand-orange-500">
+                    <h3 class="text-lg font-medium text-gray-900 font-sans">Applications for Review</h3>
+                    <p class="text-sm text-gray-500 mt-1">Applications tagged to you for review</p>
+                </div>
+                <div class="p-4 sm:p-6">
+                    <div class="space-y-4">
+                        <!-- Review Item 1 -->
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <div class="flex flex-col space-y-3">
+                                <div class="flex items-center space-x-3">
+                                    <img class="h-10 w-10 rounded-full flex-shrink-0" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%236366f1'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='32' font-family='Arial'%3EJL%3C/text%3E%3C/svg%3E" alt="James Liu">
+                                    <div class="min-w-0 flex-1">
+                                        <p class="text-sm font-medium text-gray-900">James Liu</p>
+                                        <p class="text-xs text-gray-500">3L • Federal Circuit Court Clerkship</p>
+                                        <p class="text-xs text-gray-400">Tagged by: Mark Stevens • Due: March 20, 2024</p>
+                                        <div class="flex flex-wrap items-center gap-2 mt-2">
+                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                                Priority Review
+                                            </span>
+                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                                Federal Track
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col space-y-2">
+                                    <button onclick="viewApplication('James Liu')" class="w-full px-3 py-2 text-sm bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-brand-blue-500">
+                                        View Details
+                                    </button>
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <button onclick="approveApplication('James Liu')" class="px-3 py-2 text-sm bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                            Approve
+                                        </button>
+                                        <button onclick="requestChanges('James Liu')" class="px-3 py-2 text-sm bg-yellow-600 text-white rounded-md hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                                            Request Changes
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Review Item 2 -->
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <div class="flex flex-col space-y-3">
+                                <div class="flex items-center space-x-3">
+                                    <img class="h-10 w-10 rounded-full flex-shrink-0" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23dc2626'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='32' font-family='Arial'%3ERT%3C/text%3E%3C/svg%3E" alt="Rachel Thompson">
+                                    <div class="min-w-0 flex-1">
+                                        <p class="text-sm font-medium text-gray-900">Rachel Thompson</p>
+                                        <p class="text-xs text-gray-500">2L • Public Interest Fellowship</p>
+                                        <p class="text-xs text-gray-400">Tagged by: Anna Taylor • Due: March 18, 2024</p>
+                                        <div class="flex flex-wrap items-center gap-2 mt-2">
+                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                                Public Interest
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col space-y-2">
+                                    <button onclick="viewApplication('Rachel Thompson')" class="w-full px-3 py-2 text-sm bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-brand-blue-500">
+                                        View Details
+                                    </button>
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <button onclick="approveApplication('Rachel Thompson')" class="px-3 py-2 text-sm bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                            Approve
+                                        </button>
+                                        <button onclick="requestChanges('Rachel Thompson')" class="px-3 py-2 text-sm bg-yellow-600 text-white rounded-md hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                                            Request Changes
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="content-pending" class="tab-content hidden">
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                <div class="p-4 sm:p-6 border-b border-brand-orange-500">
+                    <h3 class="text-lg font-medium text-gray-900 font-sans">Pending Review</h3>
+                    <p class="text-sm text-gray-500 mt-1">Applications awaiting counselor review</p>
+                </div>
+                <div class="p-4 sm:p-6">
+                    <div class="space-y-4">
+                        <!-- Pending Item 1 -->
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <div class="flex flex-col space-y-3">
+                                <div class="flex items-center space-x-3">
+                                    <img class="h-10 w-10 rounded-full flex-shrink-0" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%2306b6d4'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='32' font-family='Arial'%3EDP%3C/text%3E%3C/svg%3E" alt="David Park">
+                                    <div class="min-w-0 flex-1">
+                                        <p class="text-sm font-medium text-gray-900">David Park</p>
+                                        <p class="text-xs text-gray-500">1L • Summer Internship Program</p>
+                                        <p class="text-xs text-gray-400">Submitted: March 5, 2024 • Waiting for: Mark Stevens</p>
+                                        <div class="flex flex-wrap items-center gap-2 mt-2">
+                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
+                                                Pending Review
+                                            </span>
+                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                                                1L Program
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <button onclick="viewApplication('David Park')" class="px-3 py-2 text-sm bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-brand-blue-500">
+                                        View Details
+                                    </button>
+                                    <button onclick="followUp('David Park')" class="px-3 py-2 text-sm bg-brand-blue-600 text-white rounded-md hover:bg-brand-blue-700 focus:outline-none focus:ring-2 focus:ring-brand-blue-500">
+                                        Follow Up
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pending Item 2 -->
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <div class="flex flex-col space-y-3">
+                                <div class="flex items-center space-x-3">
+                                    <img class="h-10 w-10 rounded-full flex-shrink-0" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23059669'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='32' font-family='Arial'%3ELW%3C/text%3E%3C/svg%3E" alt="Lisa Wang">
+                                    <div class="min-w-0 flex-1">
+                                        <p class="text-sm font-medium text-gray-900">Lisa Wang</p>
+                                        <p class="text-xs text-gray-500">3L • State Appellate Court Clerkship</p>
+                                        <p class="text-xs text-gray-400">Submitted: March 2, 2024 • Waiting for: Anna Taylor</p>
+                                        <div class="flex flex-wrap items-center gap-2 mt-2">
+                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
+                                                Pending Review
+                                            </span>
+                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+                                                State Court
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <button onclick="viewApplication('Lisa Wang')" class="px-3 py-2 text-sm bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-brand-blue-500">
+                                        View Details
+                                    </button>
+                                    <button onclick="followUp('Lisa Wang')" class="px-3 py-2 text-sm bg-brand-blue-600 text-white rounded-md hover:bg-brand-blue-700 focus:outline-none focus:ring-2 focus:ring-brand-blue-500">
+                                        Follow Up
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="content-submitted" class="tab-content hidden">
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                <div class="p-4 sm:p-6 border-b border-brand-orange-500">
+                    <h3 class="text-lg font-medium text-gray-900 font-sans">Submitted Applications</h3>
+                    <p class="text-sm text-gray-500 mt-1">Applications successfully submitted to courts/organizations</p>
+                </div>
+                <div class="p-4 sm:p-6">
+                    <div class="space-y-4">
+                        <!-- Submitted Item 1 -->
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <div class="flex flex-col space-y-3">
+                                <div class="flex items-center space-x-3">
+                                    <img class="h-10 w-10 rounded-full flex-shrink-0" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23ec4899'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='32' font-family='Arial'%3EED%3C/text%3E%3C/svg%3E" alt="Emma Davis">
+                                    <div class="min-w-0 flex-1">
+                                        <p class="text-sm font-medium text-gray-900">Emma Davis</p>
+                                        <p class="text-xs text-gray-500">2L • ACLU Fellowship Program</p>
+                                        <p class="text-xs text-gray-400">Submitted: February 25, 2024 • Status: Under Review</p>
+                                        <div class="flex flex-wrap items-center gap-2 mt-2">
+                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                                Submitted
+                                            </span>
+                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                                Public Interest
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <button onclick="viewSubmission('Emma Davis')" class="px-3 py-2 text-sm bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-brand-blue-500">
+                                        View Submission
+                                    </button>
+                                    <button onclick="trackStatus('Emma Davis')" class="px-3 py-2 text-sm bg-brand-blue-600 text-white rounded-md hover:bg-brand-blue-700 focus:outline-none focus:ring-2 focus:ring-brand-blue-500">
+                                        Track Status
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submitted Item 2 -->
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <div class="flex flex-col space-y-3">
+                                <div class="flex items-center space-x-3">
+                                    <img class="h-10 w-10 rounded-full flex-shrink-0" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23f59e0b'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='white' font-size='32' font-family='Arial'%3EMK%3C/text%3E%3C/svg%3E" alt="Michael Kim">
+                                    <div class="min-w-0 flex-1">
+                                        <p class="text-sm font-medium text-gray-900">Michael Kim</p>
+                                        <p class="text-xs text-gray-500">3L • U.S. Court of Appeals Clerkship</p>
+                                        <p class="text-xs text-gray-400">Submitted: February 20, 2024 • Status: Interview Scheduled</p>
+                                        <div class="flex flex-wrap items-center gap-2 mt-2">
+                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                                Interview Scheduled
+                                            </span>
+                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                                Federal Appeals
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <button onclick="viewSubmission('Michael Kim')" class="px-3 py-2 text-sm bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-brand-blue-500">
+                                        View Submission
+                                    </button>
+                                    <button onclick="trackStatus('Michael Kim')" class="px-3 py-2 text-sm bg-brand-blue-600 text-white rounded-md hover:bg-brand-blue-700 focus:outline-none focus:ring-2 focus:ring-brand-blue-500">
+                                        Track Status
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Orange Footer Line -->
+    <div class="fixed bottom-0 left-0 right-0 bg-brand-orange-500 h-6 z-10"></div>
+
+    <script>
+        // Tab functionality
+        function showTab(tabName) {
+            // Hide all tab contents
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.add('hidden'));
+            
+            // Remove active state from all tabs
+            const tabs = document.querySelectorAll('.tab-button');
+            tabs.forEach(tab => {
+                tab.classList.remove('border-brand-orange-500', 'text-brand-orange-600');
+                tab.classList.add('border-transparent', 'text-gray-500');
+            });
+            
+            // Show selected tab content
+            document.getElementById(`content-${tabName}`).classList.remove('hidden');
+            
+            // Add active state to selected tab
+            const activeTab = document.getElementById(`tab-${tabName}`);
+            activeTab.classList.remove('border-transparent', 'text-gray-500');
+            activeTab.classList.add('border-brand-orange-500', 'text-brand-orange-600');
+        }
+
+        // Navigation functions
+        function showDashboard() {
+            alert('Navigating to Dashboard...');
+        }
+
+        function showApplicants() {
+            alert('Navigating to Applicants page...');
+        }
+
+        // Action functions
+        function exportData() {
+            alert('Exporting Application Data\n\nThis would generate:\n• Excel/CSV export of all applications\n• Filtered data based on current view\n• Assignment reports\n• Status summaries');
+        }
+
+        function assignTags(applicantName) {
+            alert(`Assigning tags for ${applicantName}\n\nThis would:\n• Save counselor assignment\n• Notify assigned counselor\n• Set recommender contact\n• Update application status\n• Send confirmation emails`);
+        }
+
+        function viewApplication(applicantName) {
+            alert(`Viewing application details for ${applicantName}\n\nThis would show:\n• Complete application materials\n• Personal statement and essays\n• Transcripts and recommendations\n• Application timeline\n• Review history and comments`);
+        }
+
+        function approveApplication(applicantName) {
+            alert(`Approving application for ${applicantName}\n\nThis would:\n• Mark application as approved\n• Move to submission queue\n• Notify student of approval\n• Update application status\n• Prepare for final submission`);
+        }
+
+        function requestChanges(applicantName) {
+            alert(`Requesting changes for ${applicantName}\n\nThis would:\n• Send detailed feedback to student\n• Specify required revisions\n• Set revision deadline\n• Update status to "Needs Revision"\n• Schedule follow-up review`);
+        }
+
+        function followUp(applicantName) {
+            alert(`Following up on ${applicantName}\n\nThis would:\n• Send reminder to assigned counselor\n• Check review status\n• Update priority if needed\n• Log follow-up action\n• Set next reminder date`);
+        }
+
+        function viewSubmission(applicantName) {
+            alert(`Viewing submission details for ${applicantName}\n\nThis would show:\n• Submitted application package\n• Submission confirmation\n• Court/organization details\n• Submission timeline\n• Current status updates`);
+        }
+
+        function trackStatus(applicantName) {
+            alert(`Tracking status for ${applicantName}\n\nThis would show:\n• Current application status\n• Interview schedules\n• Decision timeline\n• Communication history\n• Next steps and deadlines`);
+        }
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            if (mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.remove('hidden');
+            } else {
+                mobileMenu.classList.add('hidden');
+            }
+        }
+
+        // Initialize with Review tab active
+        document.addEventListener('DOMContentLoaded', function() {
+            showTab('review');
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'979f557d47a37d1c',t:'MTc1NzAwODI3Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
